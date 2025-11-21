@@ -21,13 +21,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Setup TeX Live
-      uses: xu-cheng/latex-action@v3
-      with:
-        root_file: MMMOD.tex
-        latexmk_use_xelatex: false
-        latexmk_use_lualatex: false
-        
     - name: Install Inkscape
       run: |
         sudo apt-get update
@@ -38,9 +31,16 @@ jobs:
         cd graphics
         for svg in *.svg; do
           if [ -f "$svg" ]; then
-            inkscape --export-type=pdf --export-latex --export-filename="${svg%.svg}.pdf" "$svg"
+            inkscape --export-type=pdf --export-latex --export-area-page --export-filename="${svg%.svg}.pdf" "$svg"
           fi
         done
+        
+    - name: Setup TeX Live
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: MMMOD.tex
+        latexmk_use_xelatex: false
+        latexmk_use_lualatex: false
         
     - name: Build PDF
       run: |
