@@ -18,6 +18,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
@@ -68,7 +70,7 @@ jobs:
         
     - name: Create or Update Release
       if: steps.get_tag.outputs.tag != ''
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.get_tag.outputs.tag }}
         name: Release ${{ steps.get_tag.outputs.tag }}
@@ -76,8 +78,7 @@ jobs:
         draft: false
         prerelease: false
         make_latest: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        overwrite_files: true
         
   lint:
     runs-on: ubuntu-latest
