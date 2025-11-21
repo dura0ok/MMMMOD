@@ -35,17 +35,13 @@ jobs:
           fi
         done
         
-    - name: Setup TeX Live
+    - name: Setup TeX Live and Build PDF
       uses: xu-cheng/latex-action@v3
       with:
         root_file: MMMOD.tex
         latexmk_use_xelatex: false
         latexmk_use_lualatex: false
-        
-    - name: Build PDF
-      run: |
-        pdflatex -interaction=nonstopmode -halt-on-error MMMOD.tex
-        pdflatex -interaction=nonstopmode -halt-on-error MMMOD.tex
+        args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
         
     - name: Get version tag
       id: get_tag
