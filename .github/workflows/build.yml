@@ -38,7 +38,6 @@ jobs:
         cd graphics
         for svg in *.svg; do
           if [ -f "$svg" ]; then
-            # Convert SVG to PDF with LaTeX export
             inkscape --export-type=pdf --export-latex --export-filename="${svg%.svg}.pdf" "$svg"
           fi
         done
